@@ -25,3 +25,11 @@ class TestAccount:
         assert account.pesel == "invalid"
         account = Account("Consectetur", "Latine", "12345678901")
         assert account.pesel == "12345678901"
+    
+    def test_promo_code(self):
+        account = Account("Lorem", "Ipsum", "12345678901")
+        assert account.balance == 0
+        account = Account("Lorem", "Ipsum", "12345678901", "PROM_123")
+        assert account.balance == 50
+        account = Account("Lorem", "Ipsum", "12345678901", "GROM_123")
+        assert account.balance == 0
