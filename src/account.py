@@ -9,3 +9,4 @@ class Account:
             self.pesel = "invalid"
         if code[:5] == "PROM_" and len(code) == 8 and int(pesel[:2]) > 60:
             self.balance += 50
+            
