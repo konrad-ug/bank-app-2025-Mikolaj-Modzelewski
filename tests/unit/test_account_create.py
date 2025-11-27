@@ -1,4 +1,4 @@
-from src.account import Account
+from src.account import Account, Caccount
 
 
 class TestAccount:
@@ -56,3 +56,39 @@ class TestTransfers:
         assert account.balance == 49
         account.transfer_out(50)
         assert account.balance == 49
+    
+class TestCompanyAccounts:
+    def test_account_creation(self):
+        account = Caccount("Lorem", "1234567890")
+        assert account.company_name == "Lorem"
+        assert account.nip == "1234567890"
+        account = Caccount("Lorem", "123456789")
+        assert account.company_name == "Lorem"
+        assert account.nip == "Invalid"
+        account = Caccount("Lorem", "123456789")
+        assert account.company_name == "Lorem"
+        assert account.nip == "Invalid"
+        account = Caccount("Lorem", "a234567890")
+        assert account.company_name == "Lorem"
+        assert account.nip == "Invalid"
+
+    def test_transfer_in(self):
+        account = Account("Lorem", "1234567890")
+        account.transfer_in(-1)
+        assert account.balance == 0
+        account.transfer_in(1)
+        assert account.balance == 1
+        account.transfer_in(0)
+        assert account.balance == 1
+    
+    def test_transfer_out(self):
+        account = Account("Lorem", "1234567890")
+        account.transfer_in(2)
+        account.transfer_out(-1)
+        assert account.balance == 2
+        account.transfer_out(1)
+        assert account.balance == 1
+        account.transfer_out(0)
+        assert account.balance == 1
+        account.transfer_out(100)
+        assert account.balance == 1

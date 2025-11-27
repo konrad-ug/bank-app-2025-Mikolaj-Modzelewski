@@ -23,3 +23,12 @@ class Account:
             print("Error. Number must be higher than 0. For outgoing transfers please use the transfer_out() method")
         else:
             self.balance += amount
+
+class Caccount(Account):
+    def __init__(self, company_name, nip):
+        self.company_name = company_name
+        if len(nip) == 10 and nip.isdigit():
+            self.nip = nip
+        else:
+            self.nip = "Invalid"
+        self.balance = 0
