@@ -35,3 +35,24 @@ class TestAccount:
         assert account.balance == 0
         account = Account("Lorem", "Ipsum", "12345678901", "PROM_123")
         assert account.balance == 0
+
+class TestTransfers:
+    def test_transfer_in(self):
+        account = Account("John", "Doe", "61345678901", "PROM_123")
+        account.transfer_in(-1)
+        assert account.balance == 50
+        account.transfer_in(1)
+        assert account.balance == 51
+        account.transfer_in(0)
+        assert account.balance == 51
+
+    def test_transfer_out(self):
+        account = Account("John", "Doe", "61345678901", "PROM_123")
+        account.transfer_out(-1)
+        assert account.balance == 50
+        account.transfer_out(1)
+        assert account.balance == 49
+        account.transfer_out(0)
+        assert account.balance == 49
+        account.transfer_out(50)
+        assert account.balance == 49
