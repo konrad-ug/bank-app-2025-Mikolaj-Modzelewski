@@ -14,7 +14,7 @@ class Account:
         if amount <= 0:
             print("Error. Number must be higher than 0. For incoming transfers please use the transfer_in() method")
         elif amount > self.balance:
-            print("Error. Insufficient funds")
+            print("Error. Insufficient funds for transfer")
         else:
             self.balance -= amount
 
@@ -24,6 +24,15 @@ class Account:
         else:
             self.balance += amount
 
+    def transfer_out_express(self, amount):
+        if amount <= 0:
+            print("Error. Number must be higher than 0. For incoming transfers please use the transfer_in() method")
+        elif amount > self.balance:
+            print("Error. Insufficient funds for transfer")
+        else:
+            self.balance -= (amount + 1)
+
+
 class Caccount(Account):
     def __init__(self, company_name, nip):
         self.company_name = company_name
@@ -32,3 +41,11 @@ class Caccount(Account):
         else:
             self.nip = "Invalid"
         self.balance = 0
+
+    def transfer_out_express(self, amount):
+        if amount <= 0:
+            print("Error. Number must be higher than 0. For incoming transfers please use the transfer_in() method")
+        elif amount > self.balance:
+            print("Error. Insufficient funds for transfer")
+        else:
+            self.balance -= (amount + 5)
