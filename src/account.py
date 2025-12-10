@@ -2,12 +2,13 @@ class Account:
     def __init__(self, first_name, last_name, pesel = "00000000000", code = ""):
         self.first_name = first_name
         self.last_name = last_name
-        self.balance = 0 
-        if len(pesel) == 11:
+        self.balance = 0
+        self.history = []
+        if len(pesel) == 11 and pesel.isdigit():
             self.pesel = pesel
         else:
             self.pesel = "invalid"
-        if code[:5] == "PROM_" and len(code) == 8 and int(pesel[:2]) > 60:
+        if code[:5] == "PROM_" and len(code) == 8 and self.pesel != "invalid" and int(pesel[:2]) > 60:
             self.balance += 50
 
     def transfer_out(self, amount):
@@ -17,12 +18,14 @@ class Account:
             print("Error. Insufficient funds for transfer")
         else:
             self.balance -= amount
+            self.history.append(-amount)
 
     def transfer_in(self, amount):
         if amount <= 0:
             print("Error. Number must be higher than 0. For outgoing transfers please use the transfer_out() method")
         else:
             self.balance += amount
+            self.history.append(amount)
 
     def transfer_out_express(self, amount):
         if amount <= 0:
@@ -31,10 +34,12 @@ class Account:
             print("Error. Insufficient funds for transfer")
         else:
             self.balance -= (amount + 1)
-
+            self.history.append(-amount)
+            self.history.append(-1)
 
 class Caccount(Account):
     def __init__(self, company_name, nip):
+        super().__init__(first_name="", last_name="", pesel="00000000000")
         self.company_name = company_name
         if len(nip) == 10 and nip.isdigit():
             self.nip = nip
@@ -49,3 +54,5 @@ class Caccount(Account):
             print("Error. Insufficient funds for transfer")
         else:
             self.balance -= (amount + 5)
+            self.history.append(-amount)
+            self.history.append(-5)
