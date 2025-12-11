@@ -37,6 +37,14 @@ class Account:
             self.history.append(-amount)
             self.history.append(-1)
 
+    def submit_for_loan(self, amount):
+        if (len(self.history) >= 3 and all(i > 0 for i in self.history[-3:])) or (len(self.history) >= 5 and sum(self.history) > amount):
+            self.balance += amount
+            return True
+        return False
+
+
+
 class Caccount(Account):
     def __init__(self, company_name, nip):
         super().__init__(first_name="", last_name="", pesel="00000000000")
@@ -56,3 +64,6 @@ class Caccount(Account):
             self.balance -= (amount + 5)
             self.history.append(-amount)
             self.history.append(-5)
+    
+    def submit_for_loan(self, amount):
+        pass
