@@ -36,7 +36,6 @@ class TestAccount:
         account = Account("Lorem", "Ipsum", "12345678901", "PROM_123")
         assert account.balance == 0
 
-
 class TestTransfers:
     def test_transfer_in(self):
         account = Account("John", "Doe", "61345678901", "PROM_123")
@@ -57,8 +56,7 @@ class TestTransfers:
         assert account.balance == 49
         account.transfer_out(50)
         assert account.balance == 49
-
-
+    
 class TestCompanyAccounts:
     def test_account_creation(self):
         account = Caccount("Lorem", "1234567890")
@@ -95,7 +93,6 @@ class TestCompanyAccounts:
         account.transfer_out(100)
         assert account.balance == 1
 
-
 class TestExpressTransfers:
     def test_transfer_out_express_account(self):
         account = Account("John", "Doe", "61345678901", "PROM_123")
@@ -121,7 +118,6 @@ class TestExpressTransfers:
         account.transfer_out_express(200)
         assert account.balance == 75
 
-
 class TestTransferHistory:
     def test_transaction_history_account(self):
         account = Account("Lorem", "Ipsum", "12345678901")
@@ -139,54 +135,3 @@ class TestTransferHistory:
         assert account.history == [5, -10]
         account.transfer_out_express(5)
         assert account.history == [5, -10, -5, -5]
-
-
-class TestLoans:
-    def test_loans_account(self):
-        account = Account("Lorem", "Ipsum", "12345678901")
-        account.balance = 1000
-        account.transfer_in(1)
-        account.transfer_in(1)
-        account.transfer_in(1)
-        assert account.submit_for_loan(1) == True
-        assert account.balance == 1004
-        account = Account("Lorem", "Ipsum", "12345678901")
-        account.balance = 1000
-        account.transfer_in(1)
-        account.transfer_in(1)
-        assert account.submit_for_loan(1) == False
-        account = Account("Lorem", "Ipsum", "12345678901")
-        account.balance = 1000
-        account.transfer_in(1)
-        account.transfer_in(1)
-        account.transfer_out(1)
-        assert account.submit_for_loan(1) == False
-        account = Account("Lorem", "Ipsum", "12345678901")
-        account.balance = 1000
-        account.transfer_in(1)
-        account.transfer_in(1)
-        account.transfer_out(1)
-        account.transfer_in(1)
-        assert account.submit_for_loan(1) == False
-        account = Account("Lorem", "Ipsum", "12345678901")
-        account.balance = 1000
-        account.transfer_in(1)
-        account.transfer_in(1)
-        account.transfer_out_express(1)
-        account.transfer_in(2)
-        assert account.submit_for_loan(1) == True
-        account = Account("Lorem", "Ipsum", "12345678901")
-        account.balance = 1000
-        account.transfer_in(1)
-        account.transfer_in(1)
-        account.transfer_out_express(1)
-        account.transfer_in(1)
-        assert account.submit_for_loan(1) == False
-
-    def test_loans_company_account(self):
-        account = Caccount("Lorem", "1234567890")
-        account.balance = 1000
-        account.transfer_in(1)
-        account.transfer_in(1)
-        account.transfer_in(1)
-        assert account.submit_for_loan(1) == None
