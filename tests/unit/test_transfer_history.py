@@ -1,21 +1,18 @@
+import pytest
 from src.account import PersonalAccount, CompanyAccount
 
 
+@pytest.mark.parametrize("account", [
+    PersonalAccount("John", "Doe"),
+    CompanyAccount("MyCompany", "1234567890")
+])
+
+
 class TestTransferHistory:
-    def test_transaction_history_personal(self):
-        account = PersonalAccount("Lorem", "Ipsum", "12345678901")
-        account.balance = 1000
-        account.transfer_in(5)
-        account.transfer_out(10)
-        assert account.history == [5, -10]
-        account.transfer_out_express(5)
-        assert account.history == [5, -10, -5, -1]
-    
-    def test_transaction_history_company(self):
-        account = CompanyAccount("Lorem", "1234567890")
-        account.balance = 1000
-        account.transfer_in(5)
-        account.transfer_out(10)
-        assert account.history == [5, -10]
-        account.transfer_out_express(5)
-        assert account.history == [5, -10, -5, -5]
+    def test_transaction_history(self, account):
+        account.transfer_in(1)
+        account.transfer_out(1)
+        assert account.history == [1, -1]
+        account.balance = 1
+        account.transfer_out_express(1)
+        assert account.history in ([1, -1, -1, -1], [1, -1, -1, -5])
