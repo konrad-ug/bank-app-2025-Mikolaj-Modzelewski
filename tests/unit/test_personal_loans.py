@@ -9,7 +9,7 @@ def account():
     return acc
 
 
-class TestLoans:
+class TestPersonalLoans:
     def test_last_three_deposits(self, account):
         account.transfer_in(1)
         account.transfer_in(1)

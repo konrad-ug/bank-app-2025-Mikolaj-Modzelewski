@@ -67,3 +67,9 @@ class CompanyAccount(Account):
         self.balance -= (amount + 5)
         self.history.append(-amount)
         self.history.append(-5)
+
+    def take_loan(self, amount):
+        if amount <= (self.balance / 2) and -1775 in self.history:
+            self.balance += amount
+            return True
+        return False
