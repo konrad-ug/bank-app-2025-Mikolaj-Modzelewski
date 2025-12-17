@@ -8,7 +8,6 @@ from src.account import PersonalAccount, CompanyAccount
 
 class TestExpressTransfers:
     def test_transfer_out_express(self, account):
-        account = PersonalAccount("John", "Doe")
         with pytest.raises(ValueError):
             account.transfer_out_express(-1)
         with pytest.raises(ValueError):
