@@ -1,5 +1,5 @@
 import pytest
-from src.account import PersonalAccount
+from src.personal_account import PersonalAccount
 from src.account_registry import AccountRegistry
 
 @pytest.fixture
@@ -21,14 +21,15 @@ class TestAccountRegistry:
         account = PersonalAccount("John", "Doe", "44051401458")
         registry.add_account(account)
         registry.add_account(PersonalAccount("John", "Doe", "99031212316"))
-        assert registry.search_account("44051401458") == account
+        assert registry.get_account_by_pesel("44051401458") == account
+        assert registry.get_account_by_pesel("01234567890") == False
     
     def test_get_registry(self, registry):
         account1 = PersonalAccount("John", "Doe")
         account2 = PersonalAccount("Jane", "Doe")
         registry.add_account(account1)
         registry.add_account(account2)
-        assert registry.get_registry() == [account1, account2]
+        assert registry.get_all_accounts() == [account1, account2]
     
     def test_account_count(self, registry):
         account1 = PersonalAccount("John", "Doe")
@@ -36,3 +37,17 @@ class TestAccountRegistry:
         registry.add_account(account1)
         registry.add_account(account2)
         assert registry.account_count() == 2
+
+    def test_account_update(self, registry):
+        account = PersonalAccount("Jane", "Doe", "99031212316")
+        registry.add_account(account)
+        data = {"first_name": "John", "last_name": "Xia"}
+        assert registry.update_account("99031212316", data) == True
+        assert registry.update_account("01234567890", data) == False
+        assert registry.accounts[0].first_name == "John" and registry.accounts[0].last_name == "Xia"
+    
+    def test_account_deletion(self, registry):
+        registry.add_account(PersonalAccount("Jane", "Doe", "99031212316"))
+        assert registry.delete_account("99031212316") == True
+        assert registry.accounts == []
+        assert registry.delete_account("01234567890") == False

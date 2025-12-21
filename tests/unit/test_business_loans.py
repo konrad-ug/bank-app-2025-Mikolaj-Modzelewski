@@ -1,5 +1,6 @@
 import pytest
-from src.account import PersonalAccount, CompanyAccount
+from src.personal_account import PersonalAccount
+from src.company_account import CompanyAccount
 
 @pytest.fixture
 def account():
