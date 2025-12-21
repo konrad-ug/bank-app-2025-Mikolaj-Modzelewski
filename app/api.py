@@ -10,7 +10,8 @@ def create_account():
     data = request.get_json()
     print(f"Create account request: {data}")
     account = PersonalAccount(data["name"], data["surname"], data["pesel"], data.get("code", ""))
-    registry.add_account(account)
+    if registry.add_account(account) == False:
+        return jsonify({"message": "Account with this PESEL already exists"}), 409
     return jsonify({"message": "Account created"}), 201
 
 @app.route("/api/accounts", methods=['GET'])

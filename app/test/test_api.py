@@ -17,13 +17,16 @@ class TestApi:
         assert response.status_code == 201
         data = response.get_json()
         assert data["message"] == "Account created"
-
-    def test_get_all_accounts(self, client):
-        client.post("/api/accounts", json={
+        response = client.post("/api/accounts", json={
             "name": "John",
             "surname": "Doe",
             "pesel": "01234567890",
         })
+        assert response.status_code == 409
+        data = response.get_json()
+        assert data["message"] == "Account with this PESEL already exists"
+
+    def test_get_all_accounts(self, client):
         response = client.get("/api/accounts")
         assert response.status_code == 200
         data = response.get_json()
@@ -31,15 +34,10 @@ class TestApi:
         assert any(acc["pesel"] == "01234567890" for acc in data)
 
     def test_get_account_count(self, client):
-        client.post("/api/accounts", json={
-            "name": "John",
-            "surname": "Doe",
-            "pesel": "01234567890",
-        })
         response = client.get("/api/accounts/count")
         assert response.status_code == 200
         data = response.get_json()
-        assert data["count"] == 3
+        assert data["count"] == 1
 
     def test_get_account_by_pesel(self, client):
         client.post("/api/accounts", json={
@@ -57,11 +55,6 @@ class TestApi:
         assert response.status_code == 404
     
     def test_update_account(self, client):
-        client.post("/api/accounts", json={
-            "name": "John",
-            "surname": "Doe",
-            "pesel": "01234567890",
-        })
         response = client.patch("/api/accounts/01234567890", json={
         "first_name": "Jane",
         "last_name": "Xia"
@@ -78,11 +71,6 @@ class TestApi:
         assert data["message"] == "Account not found"
         
     def test_delete_account(self, client):
-        client.post("/api/accounts", json={
-            "name": "John",
-            "surname": "Doe",
-            "pesel": "01234567890",
-        })
         response = client.delete("/api/accounts/01234567890")
         assert response.status_code == 200
         data = response.get_json()

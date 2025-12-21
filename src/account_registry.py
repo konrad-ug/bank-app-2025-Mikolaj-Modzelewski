@@ -5,7 +5,10 @@ class AccountRegistry:
         self.accounts = []
 
     def add_account(self, account: PersonalAccount):
+        if (account.pesel != "invalid" and account.pesel != "00000000000") and any(a.pesel == account.pesel and (a.pesel != "invalid" or a.pesel != "00000000000") for a in self.accounts):
+            return False
         self.accounts.append(account)
+        return True
     
     def get_account_by_pesel(self, pesel):
         for account in self.accounts:
