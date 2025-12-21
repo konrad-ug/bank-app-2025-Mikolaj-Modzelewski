@@ -30,13 +30,24 @@ class TestApi:
         assert isinstance(data, list)
         assert any(acc["pesel"] == "01234567890" for acc in data)
 
-    def test_get_account_by_pesel(self, client):
+    def test_get_account_count(self, client):
         client.post("/api/accounts", json={
             "name": "John",
             "surname": "Doe",
             "pesel": "01234567890",
         })
-        response = client.get("/api/accounts/01234567890")
+        response = client.get("/api/accounts/count")
+        assert response.status_code == 200
+        data = response.get_json()
+        assert data["count"] == 3
+
+    def test_get_account_by_pesel(self, client):
+        client.post("/api/accounts", json={
+            "name": "John",
+            "surname": "Doe",
+            "pesel": "01234567891",
+        })
+        response = client.get("/api/accounts/01234567891")
         assert response.status_code == 200
         data = response.get_json()
         assert data["name"] == "John"
