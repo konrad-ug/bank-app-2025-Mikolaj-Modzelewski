@@ -8,14 +8,16 @@ def registry():
     return reg
 
 class TestAccountRegistry:
-    def test_account_creation(self, registry):
+    def test_registry_creation(self, registry):
         assert registry.accounts == []
 
     def test_account_addition(self, registry):
-        account = PersonalAccount("John", "Doe")
+        account = PersonalAccount("John", "Doe", "01234567890")
         registry.add_account(account)
         assert account in registry.accounts
-    
+        result = registry.add_account(account)
+        assert result == False
+
     def test_account_search(self, registry):
         registry.add_account(PersonalAccount("John", "Doe", "02070803628"))
         account = PersonalAccount("John", "Doe", "44051401458")
