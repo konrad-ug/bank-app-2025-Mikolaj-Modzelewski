@@ -1,6 +1,6 @@
 import pytest
-from src.account import PersonalAccount, CompanyAccount
-
+from src.personal_account import PersonalAccount
+from src.company_account import CompanyAccount
 
 @pytest.mark.parametrize("account", [
     PersonalAccount("John", "Doe"),

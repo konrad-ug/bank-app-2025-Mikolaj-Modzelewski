@@ -1,6 +1,6 @@
 import pytest
-from src.account import PersonalAccount, CompanyAccount
-
+from src.personal_account import PersonalAccount
+from src.company_account import CompanyAccount
 
 @pytest.fixture
 def account():
@@ -9,7 +9,7 @@ def account():
     return acc
 
 
-class TestPersonalLoans:
+class TestLoans:
     def test_last_three_deposits(self, account):
         account.transfer_in(1)
         account.transfer_in(1)

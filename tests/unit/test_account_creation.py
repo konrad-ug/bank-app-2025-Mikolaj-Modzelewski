@@ -1,5 +1,5 @@
-from src.account import PersonalAccount, CompanyAccount
-
+from src.personal_account import PersonalAccount
+from src.company_account import CompanyAccount
 
 class TestPersonalAccount:
     def test_account_creation(self):
