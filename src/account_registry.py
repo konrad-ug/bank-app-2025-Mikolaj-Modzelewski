@@ -37,3 +37,31 @@ class AccountRegistry:
                 self.accounts.pop(i)
                 return True
         return False
+
+    def transfer_for_account(self, pesel, transaction_type, amount):
+        account = self.get_account_by_pesel(pesel)
+        if account == False:
+            return 404
+        match transaction_type:
+            case "incoming":
+                try:
+                    account.transfer_in(amount)
+                except ValueError:
+                    return 400
+            case "outgoing":
+                try:
+                    account.transfer_out(amount)
+                except ValueError:
+                    return 400
+                except RuntimeError:
+                    return 422
+            case "express":
+                try:
+                    account.transfer_out_express(amount)
+                except ValueError:
+                    return 400
+                except RuntimeError:
+                    return 422
+            case _:
+                return 400
+        return 200
