@@ -7,7 +7,7 @@ def client():
     with app.test_client() as client:
         yield client
 
-class TestApi:
+class TestApiCRUD:
     def test_create_account(self, client):
         response = client.post("/api/accounts", json={
             "name": "John",
@@ -53,6 +53,8 @@ class TestApi:
         assert data["balance"] == 0
         response = client.get("/api/accounts/11111111111")
         assert response.status_code == 404
+        data = response.get_json()
+        assert data["message"] == "Account not found"
     
     def test_update_account(self, client):
         response = client.patch("/api/accounts/01234567890", json={

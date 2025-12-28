@@ -53,3 +53,17 @@ class TestAccountRegistry:
         assert registry.delete_account("99031212316") == True
         assert registry.accounts == []
         assert registry.delete_account("01234567890") == False
+    
+    def test_transfer_for_account(self, registry):
+        account = PersonalAccount("John", "Doe", "01234567890")
+        registry.add_account(account)
+        assert registry.transfer_for_account("00000000000", "incoming", 1) == 404
+        assert registry.transfer_for_account("01234567890", "incoming", -1) == 400
+        assert registry.transfer_for_account("01234567890", "incoming", 100) == 200
+        assert registry.transfer_for_account("01234567890", "outgoing", -1) == 400
+        assert registry.transfer_for_account("01234567890", "outgoing", 101) == 422
+        assert registry.transfer_for_account("01234567890", "outgoing", 50) == 200
+        assert registry.transfer_for_account("01234567890", "express", -1) == 400
+        assert registry.transfer_for_account("01234567890", "express", 101) == 422
+        assert registry.transfer_for_account("01234567890", "express", 50) == 200
+
