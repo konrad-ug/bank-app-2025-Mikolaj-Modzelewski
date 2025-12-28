@@ -12,5 +12,5 @@ transfers.registry = registry
 app.register_blueprint(crud)
 app.register_blueprint(transfers)
 
-if __name__ == "__main__":
+if __name__ == "__main__": # pragma: no cover
     app.run(debug = True)
