@@ -4,7 +4,7 @@ from src.company_account import CompanyAccount
 
 @pytest.fixture
 def account():
-    acc = CompanyAccount("Mycompany", "1234567890")
+    acc = CompanyAccount("Lorem", "7342867148")
     acc.balance = 2
     return acc
 

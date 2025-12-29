@@ -3,13 +3,12 @@ from src.personal_account import PersonalAccount
 from src.company_account import CompanyAccount
 
 @pytest.mark.parametrize("account", [
-    PersonalAccount("John", "Doe"),
-    CompanyAccount("MyCompany", "1234567890")
+    lambda: PersonalAccount("John", "Doe"),
+    lambda: CompanyAccount("Lorem", "7342867148"),
 ])
-
-
 class TestTransfers:
     def test_transfer_in(self, account):
+        account = account()
         with pytest.raises(ValueError):
             account.transfer_in(-1)
         with pytest.raises(ValueError):
@@ -18,6 +17,7 @@ class TestTransfers:
         assert account.balance == 1
 
     def test_transfer_out(self, account):
+        account = account()
         with pytest.raises(ValueError):
             account.transfer_out(-1)
         with pytest.raises(ValueError):
