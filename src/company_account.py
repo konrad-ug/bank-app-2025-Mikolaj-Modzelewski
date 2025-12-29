@@ -9,9 +9,7 @@ class CompanyAccount(Account):
         self.company_name = company_name
         if len(nip) == 10 and nip.isdigit():
             url = getenv("BANK_APP_MF_URL")
-            self.nip_check = get(f"{url}api/search/nip/{nip}?date={date.today().strftime("%Y-%m-%d")}")
-            print("STATUS:", self.nip_check.status_code)
-            print("JSON:", self.nip_check.json())
+            self.nip_check = get(f"{url}api/search/nip/{nip}?date={date.today().strftime('%Y-%m-%d')}")
             if self.nip_check.status_code != 200 or self.nip_check.json().get("result").get("subject") == None:
                 raise ValueError("Company not registered!!")
             self.nip = nip
