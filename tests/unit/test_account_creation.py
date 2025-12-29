@@ -1,3 +1,4 @@
+import pytest
 from src.personal_account import PersonalAccount
 from src.company_account import CompanyAccount
 
@@ -40,12 +41,10 @@ class TestCompanyAccounts:
         account = CompanyAccount("Lorem", "123456789")
         assert account.company_name == "Lorem"
         assert account.nip == "Invalid"
-        account = CompanyAccount("Lorem", "123456789")
-        assert account.company_name == "Lorem"
-        assert account.nip == "Invalid"
         account = CompanyAccount("Lorem", "a234567890")
-        assert account.company_name == "Lorem"
         assert account.nip == "Invalid"
-        account = CompanyAccount("Lorem", "1234567890")
-        assert account.company_name == "Lorem"
-        assert account.nip == "1234567890"
+        with pytest.raises(ValueError):
+            account = CompanyAccount("Lorem", "1234567890")
+        account = CompanyAccount("Lorem", "7342867148")
+        assert account.nip == "7342867148"
+        

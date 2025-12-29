@@ -3,12 +3,13 @@ from src.personal_account import PersonalAccount
 from src.company_account import CompanyAccount
 
 @pytest.mark.parametrize("account", [
-    PersonalAccount("John", "Doe"),
-    CompanyAccount("MyCompany", "1234567890")
+    lambda: PersonalAccount("John", "Doe"),
+    lambda: CompanyAccount("Lorem", "7342867148"),
 ])
 
 class TestExpressTransfers:
     def test_transfer_out_express(self, account):
+        account = account()
         with pytest.raises(ValueError):
             account.transfer_out_express(-1)
         with pytest.raises(ValueError):
