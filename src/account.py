@@ -1,3 +1,6 @@
+from smtp.smtp import SMTPClient
+from datetime import date
+
 class Account:
     def __init__(self):
         self.balance = 0
@@ -16,3 +19,10 @@ class Account:
             raise ValueError("Amount must be greater than 0. Use transfer_out() for withdrawals.")
         self.balance += amount
         self.history.append(amount)
+    
+    def send_history_via_email(self, email):
+        if self.__class__.__name__ == "PersonalAccount":
+            account = "Personal"
+        else:
+            account = "Company"
+        return SMTPClient().send(f"Account Transfer History {date.today().strftime('%Y-%m-%d')}", f"{account} account history: {self.history}", email)
