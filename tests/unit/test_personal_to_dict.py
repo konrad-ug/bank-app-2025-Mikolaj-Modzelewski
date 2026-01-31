@@ -11,7 +11,7 @@ def test_to_dict():
     expected_dict = {
         "first_name": "Jan",
         "last_name": "Kowalski",
-        "pesel": "12345678901",
+        "pesel": "1234567890",
         "balance": 150.0,
         "history": ["Deposit: 100", "Payment: 50"]
     }
