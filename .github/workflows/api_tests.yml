@@ -21,18 +21,11 @@ jobs:
       - name: Start MongoDB
         run: |
           docker compose -f mongo.yml up -d
-          echo "Waiting for MongoDB to start..."
-          sleep 15
-
-          docker ps -a
-
-          docker logs mongo_container
 
       - name: Start flask
         run: |
           export FLASK_APP=app/api.py
-          flask run &
-          sleep 5
+          flask run
 
       - name: Execute API tests
         run: |

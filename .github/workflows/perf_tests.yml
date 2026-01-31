@@ -22,8 +22,7 @@ jobs:
         run: |
           export FLASK_APP=app/api.py
           export PYTHONPATH=$GITHUB_WORKSPACE
-          flask run &
-          sleep 5
+          flask run
 
       - name: Execute Perf tests
         run: |
