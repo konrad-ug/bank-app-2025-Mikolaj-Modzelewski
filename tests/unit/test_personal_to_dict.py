@@ -1,7 +1,7 @@
 from src.personal_account import PersonalAccount
 
 def test_to_dict():
-    account = PersonalAccount("Jan", "Kowalski", "1234567890")
+    account = PersonalAccount("Jan", "Kowalski", "12345678901")
     
     account.balance = 150.0
     account.history = ["Deposit: 100", "Payment: 50"]
@@ -11,7 +11,7 @@ def test_to_dict():
     expected_dict = {
         "first_name": "Jan",
         "last_name": "Kowalski",
-        "pesel": "1234567890",
+        "pesel": "12345678901",
         "balance": 150.0,
         "history": ["Deposit: 100", "Payment: 50"]
     }
