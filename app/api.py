@@ -19,5 +19,5 @@ app.register_blueprint(crud)
 app.register_blueprint(transfers)
 app.register_blueprint(db_bp)
 
-if __name__ == "__main__":
+if __name__ == "__main__": # pragma: no cover
     app.run(debug = True)
