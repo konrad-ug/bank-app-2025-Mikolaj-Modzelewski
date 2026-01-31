@@ -25,7 +25,8 @@ jobs:
       - name: Start flask
         run: |
           export FLASK_APP=app/api.py
-          flask run
+          flask run &
+          sleep 5
 
       - name: Execute API tests
         run: |
